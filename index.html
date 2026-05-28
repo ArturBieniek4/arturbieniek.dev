@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Artur Bieniek is a low-level and hardware-focused software engineer working on Verilator, digital design tooling, CUDA, FPGA systems, and Linux infrastructure."
+    >
+    <meta name="color-scheme" content="dark">
+    <meta property="og:title" content="Artur Bieniek">
+    <meta
+      property="og:description"
+      content="Low-level / hardware-focused software engineer working on Verilator, simulation tooling, CUDA, FPGA, and Linux systems."
+    >
+    <meta property="og:type" content="website">
+    <title>Artur Bieniek | Low-level software engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    >
+    <style>
+      :root {
+        --bg: #0d1117;
+        --panel: #111821;
+        --panel-strong: #151d27;
+        --text: #f0f4f8;
+        --muted: #a6b3c2;
+        --subtle: #758294;
+        --line: rgba(166, 179, 194, 0.18);
+        --accent: #5eead4;
+        --accent-soft: rgba(94, 234, 212, 0.12);
+        --max-width: 1120px;
+        --radius: 8px;
+        --shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background:
+          linear-gradient(180deg, rgba(94, 234, 212, 0.045), transparent 460px),
+          var(--bg);
+        color: var(--text);
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 16px;
+        line-height: 1.65;
+        letter-spacing: 0;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+        text-underline-offset: 0.22em;
+      }
+
+      a:hover,
+      a:focus-visible {
+        text-decoration: underline;
+      }
+
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 4px;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+        z-index: 10;
+        transform: translateY(-160%);
+        border: 1px solid var(--accent);
+        border-radius: var(--radius);
+        background: var(--bg);
+        color: var(--text);
+        padding: 0.5rem 0.75rem;
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      .page-shell {
+        width: min(100% - 2rem, var(--max-width));
+        margin: 0 auto;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        border-bottom: 1px solid var(--line);
+        background: rgba(13, 17, 23, 0.86);
+        backdrop-filter: blur(16px);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-height: 4rem;
+      }
+
+      .brand {
+        color: var(--text);
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--muted);
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .nav-links a:hover,
+      .nav-links a:focus-visible {
+        color: var(--text);
+      }
+
+      main {
+        padding: 4rem 0 3rem;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2rem;
+        align-items: center;
+        min-height: min(760px, calc(100svh - 10rem));
+        padding: 1rem 0 4rem;
+      }
+
+      .eyebrow,
+      .kicker,
+      .meta,
+      .tag,
+      .period,
+      .stat-label {
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      }
+
+      .eyebrow {
+        margin: 0 0 1rem;
+        color: var(--accent);
+        font-size: 0.88rem;
+        font-weight: 600;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        max-width: 11ch;
+        font-size: clamp(3.5rem, 13vw, 8.5rem);
+        font-weight: 800;
+      }
+
+      h2 {
+        font-size: clamp(1.75rem, 4vw, 3rem);
+        font-weight: 750;
+      }
+
+      h3 {
+        color: var(--text);
+        font-size: 1.08rem;
+        font-weight: 700;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      .hero-copy {
+        max-width: 760px;
+      }
+
+      .hero-summary {
+        max-width: 720px;
+        margin-top: 1.35rem;
+        color: var(--muted);
+        font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+      }
+
+      .mobile-profile {
+        display: none;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1.8rem;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.75rem;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 0.66rem 0.9rem;
+        background: var(--panel);
+        color: var(--text);
+        font-weight: 650;
+      }
+
+      .button:hover,
+      .button:focus-visible {
+        border-color: rgba(94, 234, 212, 0.55);
+        background: var(--accent-soft);
+        color: var(--text);
+        text-decoration: none;
+      }
+
+      .hero-card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: linear-gradient(180deg, var(--panel-strong), var(--panel));
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .terminal-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border-bottom: 1px solid var(--line);
+        padding: 0.75rem 0.9rem;
+        color: var(--subtle);
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+        font-size: 0.78rem;
+      }
+
+      .avatar {
+        width: 92px;
+        height: 92px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        object-fit: cover;
+      }
+
+      .terminal-body {
+        display: grid;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .status-row {
+        display: grid;
+        grid-template-columns: 7rem minmax(0, 1fr);
+        gap: 1rem;
+        align-items: baseline;
+      }
+
+      .stat-label {
+        color: var(--subtle);
+        font-size: 0.78rem;
+      }
+
+      .status-row strong,
+      .status-row span {
+        min-width: 0;
+      }
+
+      .status-row strong {
+        font-weight: 650;
+      }
+
+      .status-row span {
+        color: var(--muted);
+      }
+
+      .section {
+        border-top: 1px solid var(--line);
+        padding: 4rem 0;
+      }
+
+      .section-header {
+        display: grid;
+        gap: 0.75rem;
+        max-width: 720px;
+        margin-bottom: 1.75rem;
+      }
+
+      .kicker {
+        color: var(--accent);
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .section-intro {
+        color: var(--muted);
+        font-size: 1.02rem;
+      }
+
+      .grid {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .grid.two {
+        grid-template-columns: 1fr;
+      }
+
+      .grid.three {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(17, 24, 33, 0.72);
+        padding: 1.2rem;
+      }
+
+      .card p {
+        margin-top: 0.7rem;
+        color: var(--muted);
+      }
+
+      .card-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .period {
+        flex: 0 0 auto;
+        color: var(--subtle);
+        font-size: 0.78rem;
+        white-space: nowrap;
+      }
+
+      .list {
+        display: grid;
+        gap: 0.85rem;
+        margin: 1rem 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .list li {
+        position: relative;
+        padding-left: 1.1rem;
+        color: var(--muted);
+      }
+
+      .list li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.72em;
+        width: 0.36rem;
+        height: 0.36rem;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      .project-card {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .project-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .tag {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0.26rem 0.55rem;
+        background: rgba(13, 17, 23, 0.55);
+        color: var(--muted);
+        font-size: 0.74rem;
+        line-height: 1.2;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .metric {
+        border-left: 1px solid var(--line);
+        padding-left: 1rem;
+      }
+
+      .metric strong {
+        display: block;
+        color: var(--text);
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+        font-size: 1.25rem;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .timeline {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .timeline-item {
+        display: grid;
+        gap: 0.5rem;
+        border-left: 1px solid var(--line);
+        padding-left: 1rem;
+      }
+
+      .timeline-top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.5rem 1rem;
+      }
+
+      .timeline-item p {
+        color: var(--muted);
+      }
+
+      .skills {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .skill-group {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 1rem;
+      }
+
+      .skill-group h3 {
+        margin-bottom: 0.75rem;
+        font-size: 0.98rem;
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .footer {
+        border-top: 1px solid var(--line);
+        padding: 2rem 0 3rem;
+        color: var(--subtle);
+      }
+
+      .footer .page-shell {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      @media (max-width: 700px) {
+        .site-header {
+          position: static;
+        }
+
+        .nav {
+          align-items: flex-start;
+          flex-direction: column;
+          padding: 1rem 0;
+        }
+
+        .nav-links {
+          width: 100%;
+          overflow-x: auto;
+          padding-bottom: 0.1rem;
+        }
+
+        main {
+          padding-top: 2.25rem;
+        }
+
+        .hero {
+          min-height: auto;
+          padding-bottom: 3rem;
+        }
+
+        .mobile-profile {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin: 1rem 0 1.15rem;
+          color: var(--muted);
+          font-size: 0.92rem;
+        }
+
+        .mobile-profile img {
+          width: 54px;
+          height: 54px;
+          border: 1px solid var(--line);
+          border-radius: var(--radius);
+          object-fit: cover;
+        }
+
+        .hero-card {
+          display: none;
+        }
+
+        .status-row {
+          grid-template-columns: 1fr;
+          gap: 0.2rem;
+        }
+
+        .metrics {
+          grid-template-columns: 1fr;
+        }
+
+        .card-head {
+          flex-direction: column;
+          gap: 0.35rem;
+        }
+      }
+
+      @media (min-width: 760px) {
+        .grid.two,
+        .skills {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .grid.three {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (min-width: 960px) {
+        .hero {
+          grid-template-columns: minmax(0, 1.42fr) minmax(320px, 0.58fr);
+          gap: 3rem;
+        }
+
+        .hero-card {
+          align-self: end;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+
+    <header class="site-header">
+      <nav class="nav page-shell" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="Artur Bieniek home">Artur Bieniek</a>
+        <ul class="nav-links">
+          <li><a href="#work">Work</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#open-source">Open source</a></li>
+          <li><a href="#skills">Skills</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="content" class="page-shell">
+      <section id="top" class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">low-level / hardware-focused software engineer</p>
+          <div class="mobile-profile">
+            <img
+              src="https://avatars.githubusercontent.com/u/26136688?v=4&amp;s=108"
+              width="54"
+              height="54"
+              alt="Artur Bieniek"
+              decoding="async"
+            >
+            <span>Tools Team, Antmicro · Wrocław, Poland</span>
+          </div>
+          <h1 id="hero-title">Artur Bieniek</h1>
+          <p class="hero-summary">
+            I work close to the boundary between software and hardware: Verilator tooling,
+            performance-sensitive C++, FPGA and digital design flows, CUDA kernels, Linux
+            systems, and practical hardware debugging.
+          </p>
+          <div class="hero-actions" aria-label="Profile links">
+            <a class="button" href="https://github.com/ArturBieniek4" rel="me">GitHub</a>
+            <a class="button" href="https://www.linkedin.com/in/artur-bieniek-7b0baa363" rel="me">LinkedIn</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Profile snapshot">
+          <div class="terminal-top">
+            <span>profile.snapshot</span>
+            <span>Wrocław, Poland</span>
+          </div>
+          <div class="terminal-body">
+            <img
+              class="avatar"
+              src="https://avatars.githubusercontent.com/u/26136688?v=4&amp;s=184"
+              width="92"
+              height="92"
+              alt="Artur Bieniek"
+              decoding="async"
+              fetchpriority="high"
+            >
+            <div class="status-row">
+              <span class="stat-label">current</span>
+              <strong>Tools Team, Antmicro</strong>
+            </div>
+            <div class="status-row">
+              <span class="stat-label">focus</span>
+              <span>Verilator, topwrap, simulation infrastructure, hardware verification</span>
+            </div>
+            <div class="status-row">
+              <span class="stat-label">education</span>
+              <span>M.Sc. Computer Science, University of Wrocław</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="work" class="section" aria-labelledby="work-title">
+        <div class="section-header">
+          <p class="kicker">current work</p>
+          <h2 id="work-title">Systems that need to be correct and fast.</h2>
+          <p class="section-intro">
+            My work is centered on low-level tooling, simulation behavior, and workflows where
+            small correctness or performance mistakes have a large blast radius.
+          </p>
+        </div>
+
+        <div class="grid two">
+          <article class="card">
+            <div class="card-head">
+              <h3>Antmicro · Tools Team</h3>
+              <span class="period">Jun 2025 - present</span>
+            </div>
+            <p>
+              Developing C++ tooling around Verilator and topwrap for digital design,
+              simulation, and verification workflows.
+            </p>
+            <ul class="list">
+              <li>Implemented full support for force/release while preserving simulation performance.</li>
+              <li>Extended Verilator functionality to support UVM 2017 flows without user-side workarounds.</li>
+              <li>Work on performance-sensitive simulation infrastructure and hardware verification tooling.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="card-head">
+              <h3>Independent hardware work</h3>
+              <span class="period">ongoing</span>
+            </div>
+            <p>
+              Hands-on diagnostics, repair, stability testing, and custom system building for
+              PCs, servers, GPUs, RAM, and Linux-based setups.
+            </p>
+            <ul class="list">
+              <li>Debug hardware faults from symptoms through stress testing and validation.</li>
+              <li>Build and maintain custom compute and server systems.</li>
+              <li>Combine software-level instrumentation with physical hardware diagnosis.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="projects" class="section" aria-labelledby="projects-title">
+        <div class="section-header">
+          <p class="kicker">selected work</p>
+          <h2 id="projects-title">Projects with measurable constraints.</h2>
+          <p class="section-intro">
+            A small set of work that reflects the same pattern: understand the system, find the
+            bottleneck, and make the implementation match the hardware.
+          </p>
+        </div>
+
+        <div class="grid two">
+          <article class="card project-card">
+            <div>
+              <h3>SHA3x CUDA hasher for Tari</h3>
+              <p>
+                CUDA-based SHA3x hasher reaching 700 MH/s on an RTX 4070 Super by tuning kernel
+                structure and memory access patterns for throughput.
+              </p>
+            </div>
+            <div class="project-meta">
+              <span class="tag">CUDA</span>
+              <span class="tag">C/C++</span>
+              <span class="tag">RTX 4070 Super</span>
+            </div>
+          </article>
+
+          <article class="card project-card">
+            <div>
+              <h3>SHA3x FPGA hasher</h3>
+              <p>
+                FPGA implementation of a SHA3x hasher achieving 33 MH/s on a DE1-SoC, using a
+                multicycle design to reduce critical path pressure.
+              </p>
+            </div>
+            <div class="project-meta">
+              <span class="tag">FPGA</span>
+              <span class="tag">SystemVerilog</span>
+              <span class="tag">DE1-SoC</span>
+            </div>
+          </article>
+
+          <article class="card project-card">
+            <div>
+              <h3>Low-latency network proxy and analyzer</h3>
+              <p>
+                TCP/UDP proxy for real-time packet inspection and modification, with binary
+                protocol reverse engineering and live application-layer payload manipulation.
+              </p>
+            </div>
+            <div class="project-meta">
+              <span class="tag">C/C++</span>
+              <span class="tag">Python</span>
+              <span class="tag">TCP/UDP</span>
+            </div>
+          </article>
+
+          <article class="card project-card">
+            <div>
+              <h3>ARM phone compute cluster</h3>
+              <p>
+                Built a low-cost distributed compute cluster from more than 80 smartphones with
+                8-core ARM CPUs, Linux tooling, and custom maintenance workflows.
+              </p>
+            </div>
+            <div class="project-meta">
+              <span class="tag">Linux</span>
+              <span class="tag">ARM systems</span>
+              <span class="tag">distributed compute</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="open-source" class="section" aria-labelledby="oss-title">
+        <div class="section-header">
+          <p class="kicker">open source</p>
+          <h2 id="oss-title">Recent public work.</h2>
+          <p class="section-intro">
+            Public GitHub activity reflects a current emphasis on Verilator internals, simulation
+            correctness, and practical tooling.
+          </p>
+        </div>
+
+        <div class="grid two">
+          <article class="card">
+            <h3><a href="https://github.com/verilator/verilator">Verilator contributions</a></h3>
+            <p>
+              Recent merged work includes fixes around property expression literal width,
+              virtual interface method scheduling, and assign/deassign behavior.
+            </p>
+            <div class="metrics" aria-label="Verilator contribution highlights">
+              <div class="metric">
+                <strong>2026</strong>
+                <span>active upstream PR work</span>
+              </div>
+              <div class="metric">
+                <strong>C++</strong>
+                <span>simulation internals</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3><a href="https://github.com/ArturBieniek4/engineering-thesis">Engineering thesis</a></h3>
+            <p>
+              Thesis work on implementing full force/release support in Verilator, connecting
+              language semantics, simulator design, and runtime performance.
+            </p>
+            <div class="project-meta">
+              <span class="tag">Verilator</span>
+              <span class="tag">SystemVerilog</span>
+              <span class="tag">performance</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3><a href="https://github.com/ArturBieniek4/sha3x_cudaminer">sha3x_cudaminer</a></h3>
+            <p>
+              Public CUDA mining implementation and performance-oriented hashing work, archived
+              after the core experiment was completed.
+            </p>
+            <div class="project-meta">
+              <span class="tag">CUDA</span>
+              <span class="tag">hashing</span>
+              <span class="tag">optimization</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3><a href="https://github.com/ArturBieniek4/BTS2026-CTF-Writeups">BTS2026 CTF writeups</a></h3>
+            <p>
+              Public writeups from Break The Syntax 2026, showing applied debugging, exploit
+              reasoning, and careful technical communication.
+            </p>
+            <div class="project-meta">
+              <span class="tag">CTF</span>
+              <span class="tag">debugging</span>
+              <span class="tag">writeups</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="skills" class="section" aria-labelledby="skills-title">
+        <div class="section-header">
+          <p class="kicker">toolbox</p>
+          <h2 id="skills-title">Low-level by default.</h2>
+          <p class="section-intro">
+            The useful overlap: systems programming, digital design, hardware debugging, and
+            enough infrastructure work to keep the whole path observable.
+          </p>
+        </div>
+
+        <div class="skills">
+          <article class="skill-group">
+            <h3>Languages</h3>
+            <div class="tags">
+              <span class="tag">C++</span>
+              <span class="tag">C</span>
+              <span class="tag">SystemVerilog</span>
+              <span class="tag">Python</span>
+            </div>
+          </article>
+
+          <article class="skill-group">
+            <h3>Systems</h3>
+            <div class="tags">
+              <span class="tag">Linux</span>
+              <span class="tag">TCP/UDP</span>
+              <span class="tag">ARM systems</span>
+              <span class="tag">server hardware</span>
+            </div>
+          </article>
+
+          <article class="skill-group">
+            <h3>Hardware and embedded</h3>
+            <div class="tags">
+              <span class="tag">FPGA</span>
+              <span class="tag">Raspberry Pi</span>
+              <span class="tag">ESP32</span>
+              <span class="tag">ATMega32</span>
+            </div>
+          </article>
+
+          <article class="skill-group">
+            <h3>Tools</h3>
+            <div class="tags">
+              <span class="tag">Verilator</span>
+              <span class="tag">topwrap</span>
+              <span class="tag">CUDA</span>
+              <span class="tag">GDB</span>
+              <span class="tag">Wireshark</span>
+              <span class="tag">Valgrind</span>
+              <span class="tag">ASAN</span>
+              <span class="tag">Git</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="education-title">
+        <div class="section-header">
+          <p class="kicker">education</p>
+          <h2 id="education-title">University of Wrocław.</h2>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline-item">
+            <div class="timeline-top">
+              <h3>M.Sc. in Computer Science</h3>
+              <span class="period">Feb 2026 - Feb 2027 expected</span>
+            </div>
+            <p>
+              Planned thesis topic: reducing DRAM refresh rates by identifying and mitigating
+              leaky cells.
+            </p>
+          </article>
+
+          <article class="timeline-item">
+            <div class="timeline-top">
+              <h3>B.Eng. in Computer Science</h3>
+              <span class="period">Sep 2023 - Feb 2026</span>
+            </div>
+            <p>
+              Completed in 2.5 years with grade 4.31/5.0. Thesis: implementing full support for
+              force/release in Verilator.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="page-shell">
+        <span>Artur Bieniek</span>
+        <span>Low-level software · hardware · simulation tooling</span>
+      </div>
+    </footer>
+  </body>
+</html>
